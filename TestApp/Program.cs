@@ -4,6 +4,7 @@ using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace TestApp
 {
@@ -32,6 +33,7 @@ namespace TestApp
                 //var entCC = await client.CreateShipAsync("USS Enterprise");
                 //var rCC = await client.CreateShipAsync("USS Reliant");
                 var scanResults = await client.ScanAsync(entCC);
+                var moveResult = await client.MoveAsync(entCC, scanResults.Ships.Single().Location);
             }
         }
 

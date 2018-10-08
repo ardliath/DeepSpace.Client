@@ -8,5 +8,6 @@ namespace DeepSpace.Client
     {
         Task<CreateShipResponse> CreateShipAsync(string name);
         Task<ScanResponse> ScanAsync(string commandCode);
+        Task<MoveShipResponse> MoveAsync(string commandCode, LocationRequestOrResponse destination);
     }
 }

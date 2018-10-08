@@ -55,5 +55,13 @@ namespace DeepSpace.Client
             var data = await PostDataAsync(address, payload);
             return JsonConvert.DeserializeObject<ScanResponse>(data);
         }
+
+        public async Task<MoveShipResponse> MoveAsync(string commandCode, LocationRequestOrResponse destination)
+        {
+            var address = GetCommand("move");
+            var payload = string.Concat("{commandCode: '", commandCode, "', destination: {x:", destination.X, ", y:", destination.Y, ", z:", destination.Z, "}}");
+            var data = await PostDataAsync(address, payload);
+            return JsonConvert.DeserializeObject<MoveShipResponse>(data);
+        }
     }
 }
