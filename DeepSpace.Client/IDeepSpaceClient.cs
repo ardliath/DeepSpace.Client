@@ -7,5 +7,6 @@ namespace DeepSpace.Client
     public interface IDeepSpaceClient : IDisposable
     {
         Task<CreateShipResponse> CreateShipAsync(string name);
+        Task<ScanResponse> ScanAsync(string commandCode);
     }
 }

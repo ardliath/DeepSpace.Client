@@ -20,13 +20,10 @@ namespace DeepSpace.Client
 
         public async Task<CreateShipResponse> CreateShipAsync(string name)
         {
-            using (var client = new HttpClient())
-            {
-                var address = GetCommand("create");
-                var payload = string.Concat("{name: '", name, "'}");
-                var data = await PostDataAsync(address, payload);
-                return JsonConvert.DeserializeObject<CreateShipResponse>(data);
-            }
+            var address = GetCommand("create");
+            var payload = string.Concat("{name: '", name, "'}");
+            var data = await PostDataAsync(address, payload);
+            return JsonConvert.DeserializeObject<CreateShipResponse>(data);
         }
 
         protected string GetCommand(string commandName)
@@ -37,20 +34,26 @@ namespace DeepSpace.Client
 
         private async Task<string> PostDataAsync(string address, string payload)
         {
-            using (var client = new HttpClient())
+            StringContent content = new StringContent(payload, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await this.HttpClient.PostAsync(address, content);
+            if (response.IsSuccessStatusCode)
             {
-                StringContent content = new StringContent(payload, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PostAsync(address, content);
-                if (response.IsSuccessStatusCode)
-                {
-                    return await response.Content.ReadAsStringAsync();
-                }
-                return null;
+                return await response.Content.ReadAsStringAsync();
             }
-        }
+            return null;
+        }        
 
         public void Dispose()
-        {            
+        {
+            this.HttpClient.Dispose();
+        }
+
+        public async Task<ScanResponse> ScanAsync(string commandCode)
+        {
+            var address = GetCommand("scan");
+            var payload = string.Concat("{commandCode: '", commandCode, "'}");
+            var data = await PostDataAsync(address, payload);
+            return JsonConvert.DeserializeObject<ScanResponse>(data);
         }
     }
 }

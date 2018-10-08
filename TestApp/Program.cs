@@ -28,8 +28,10 @@ namespace TestApp
         {
             using (IDeepSpaceClient client = new DeepSpaceClient("http://localhost:51530/api/ship/"))
             {
-                var entCC = await client.CreateShipAsync("USS Enterprise");
-                var rCC = await client.CreateShipAsync("USS Reliant");
+                var entCC = "5388820d-6daa-4d3e-97b6-4bc02f718e20";
+                //var entCC = await client.CreateShipAsync("USS Enterprise");
+                //var rCC = await client.CreateShipAsync("USS Reliant");
+                var scanResults = await client.ScanAsync(entCC);
             }
         }
 
